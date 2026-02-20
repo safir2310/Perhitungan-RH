@@ -70,7 +70,7 @@ Produk tidak boleh dijual. Segera lakukan penarikan dari rak.
 - **Language**: TypeScript 5
 - **Styling**: Tailwind CSS 4
 - **UI Components**: shadcn/ui (New York style)
-- **Database**: Prisma ORM dengan SQLite
+- **Database**: Prisma ORM dengan PostgreSQL (Neon)
 - **Real-time**: Socket.io
 - **Cron Jobs**: node-cron
 
@@ -227,10 +227,66 @@ Status Expired: Hari Ini ≥ Tanggal Kadaluarsa
 
 ## 🚀 Deployment
 
-### Vercel (Recommended for Next.js)
-1. Connect repository ke Vercel
-2. Setup environment variables
-3. Deploy
+### 📖 Panduan Lengkap
+Untuk panduan deployment lengkap ke Vercel dengan database Neon, lihat file **[DEPLOYMENT.md](./DEPLOYMENT.md)**
+
+### Quick Start (Local Development)
+
+#### Prerequisites
+- Bun runtime
+- PostgreSQL database (Neon recommended for production)
+
+#### Setup Database Neon (Free & Serverless)
+1. Buka https://neon.tech
+2. Sign up dan buat project baru
+3. Copy connection string
+4. Update `.env` file:
+   ```env
+   DATABASE_URL="postgresql://[user]:[password]@[host]/[database]?sslmode=require"
+   CRON_SECRET="your-secret-key"
+   ```
+
+#### Setup Local
+```bash
+# Install dependencies
+bun install
+
+# Generate Prisma client
+bun run db:generate
+
+# Push schema to database
+bun run db:push
+
+# Run development server
+bun run dev
+
+# Run notification service (port 3002)
+cd mini-services/notification-service
+bun run dev
+
+# Run cron service (background)
+cd mini-services/cron-service
+bun run dev
+```
+
+### Deploy ke Vercel
+
+1. **Setup Database Neon** (Production)
+   - Buat database di https://neon.tech
+   - Copy connection string
+   - Setup environment variables di Vercel
+
+2. **Connect ke Vercel**
+   - Import repository GitHub ke Vercel
+   - Set environment variables:
+     - `DATABASE_URL`: Connection string dari Neon
+     - `CRON_SECRET`: Random secret string
+
+3. **Deploy**
+   - Vercel akan otomatis build dan deploy
+   - Akses website di URL yang diberikan
+
+📖 Lihat [DEPLOYMENT.md](./DEPLOYMENT.md) untuk panduan lengkap!
 
 ### Alternatif
 - Render
