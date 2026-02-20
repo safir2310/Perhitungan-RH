@@ -25,15 +25,22 @@
 2. Klik **"Create project"**
 3. Tunggu beberapa detik hingga database dibuat
 
-### 1.3 Dapatkan Connection String
+### 2.2 Get Connection String
 
 Setelah project dibuat:
 1. Dashboard akan menampilkan connection string
 2. Copy **Connection String** yang berbentuk:
    ```
-   postgresql://[user]:[password]@[host]/[database]?sslmode=require
+   postgresql://neondb_owner:npg_XXX@ep-XXX-XXX-XXX.us-east-1.aws.neon.tech/neondb?sslmode=require
    ```
 3. **Simpan connection string ini** untuk langkah selanjutnya
+
+**⚠️ Penting**: Project ini sudah dikonfigurasi dengan database Neon. Connection string yang sudah di-setup:
+- Database: `neondb`
+- Host: `ep-wild-field-aidxb4qi-pooler.c-4.us-east-1.aws.neon.tech`
+- User: `neondb_owner`
+
+**🔐 Security**: Setelah deployment selesai, disarankan untuk rotate password di Neon dashboard.
 
 ---
 
