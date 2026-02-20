@@ -13,13 +13,14 @@ export function StatisticsCards({ statistics }: StatisticsCardsProps) {
 
   const cards = [
     {
-      title: 'Total Produk',
+      title: 'Total',
       value: summary.totalProducts,
       quantity: summary.totalQuantity,
       icon: Package,
       color: 'text-primary',
       bgClass: 'bg-primary/10',
-      description: 'Jumlah item',
+      description: 'produk',
+      badgeBg: 'bg-primary',
     },
     {
       title: 'Aman',
@@ -29,7 +30,8 @@ export function StatisticsCards({ statistics }: StatisticsCardsProps) {
       icon: CheckCircle,
       color: 'text-green-600 dark:text-green-400',
       bgClass: 'bg-green-100 dark:bg-green-900/20',
-      description: 'Produk aman',
+      description: 'produk',
+      badgeBg: 'bg-green-600',
     },
     {
       title: 'Wajib Retur',
@@ -39,7 +41,8 @@ export function StatisticsCards({ statistics }: StatisticsCardsProps) {
       icon: AlertTriangle,
       color: 'text-yellow-600 dark:text-yellow-400',
       bgClass: 'bg-yellow-100 dark:bg-yellow-900/20',
-      description: 'Perlu retur segera',
+      description: 'produk',
+      badgeBg: 'bg-yellow-600',
     },
     {
       title: 'Jatuh RH',
@@ -49,32 +52,37 @@ export function StatisticsCards({ statistics }: StatisticsCardsProps) {
       icon: XCircle,
       color: 'text-red-600 dark:text-red-400',
       bgClass: 'bg-red-100 dark:bg-red-900/20',
-      description: 'Sudah kadaluarsa',
+      description: 'produk',
+      badgeBg: 'bg-red-600',
     },
   ];
 
   return (
-    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+    <div className="grid gap-3 sm:gap-4 grid-cols-2 lg:grid-cols-4">
       {cards.map((card) => {
         const Icon = card.icon;
         return (
-          <Card key={card.title} className="overflow-hidden">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-muted-foreground">
+          <Card key={card.title} className="overflow-hidden hover:shadow-md transition-shadow">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 px-4 pt-4">
+              <CardTitle className="text-xs sm:text-sm font-medium text-muted-foreground">
                 {card.title}
               </CardTitle>
-              <div className={`p-2 rounded-lg ${card.bgClass}`}>
-                <Icon className={`h-4 w-4 ${card.color}`} />
+              <div className={`p-1.5 sm:p-2 rounded-lg ${card.bgClass}`}>
+                <Icon className={`h-4 w-4 sm:h-5 sm:w-5 ${card.color}`} />
               </div>
             </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold">{card.value}</div>
-              <p className="text-xs text-muted-foreground mt-1">
-                {card.quantity} item {card.description}
+            <CardContent className="px-4 pb-4">
+              <div className="text-2xl sm:text-3xl font-bold">{card.value}</div>
+              <div className="flex items-center gap-2 mt-1">
+                <p className="text-xs text-muted-foreground">
+                  {card.quantity} item {card.description}
+                </p>
                 {card.percentage !== undefined && (
-                  <span className="ml-2">({card.percentage}%)</span>
+                  <span className={`text-xs font-semibold px-1.5 py-0.5 rounded text-white ${card.badgeBg}`}>
+                    {card.percentage}%
+                  </span>
                 )}
-              </p>
+              </div>
             </CardContent>
           </Card>
         );

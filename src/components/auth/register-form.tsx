@@ -96,27 +96,27 @@ export function RegisterForm({ onToggleMode }: RegisterFormProps) {
   };
 
   return (
-    <Card className="w-full max-w-md shadow-lg">
-      <CardHeader className="space-y-3 text-center">
+    <Card className="w-full max-w-md shadow-lg mx-4">
+      <CardHeader className="space-y-2 sm:space-y-3 text-center px-6 py-4 sm:py-6">
         <div className="flex justify-center">
-          <div className="p-3 bg-primary/10 rounded-full">
-            <UserPlus className="w-8 h-8 text-primary" />
+          <div className="p-2.5 sm:p-3 bg-primary/10 rounded-full">
+            <UserPlus className="w-7 h-7 sm:w-8 sm:h-8 text-primary" />
           </div>
         </div>
-        <CardTitle className="text-2xl font-bold">Daftar Akun Baru</CardTitle>
-        <CardDescription>Bergabung untuk mengelola retur harian produk</CardDescription>
+        <CardTitle className="text-xl sm:text-2xl font-bold">Daftar Akun Baru</CardTitle>
+        <CardDescription className="text-sm sm:text-base">Bergabung untuk mengelola retur harian produk</CardDescription>
       </CardHeader>
-      <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-4">
+      <CardContent className="px-6 pb-4 sm:pb-6">
+        <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
           {error && (
             <Alert variant="destructive">
               <AlertCircle className="h-4 w-4" />
-              <AlertDescription>{error}</AlertDescription>
+              <AlertDescription className="text-sm">{error}</AlertDescription>
             </Alert>
           )}
 
           <div className="space-y-2">
-            <Label htmlFor="username">Username *</Label>
+            <Label htmlFor="username" className="text-sm">Username *</Label>
             <Input
               id="username"
               type="text"
@@ -125,12 +125,12 @@ export function RegisterForm({ onToggleMode }: RegisterFormProps) {
               onChange={handleChange}
               disabled={loading}
               required
-              className="h-11"
+              className="h-10 sm:h-11"
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="email">Email (Opsional)</Label>
+            <Label htmlFor="email" className="text-sm">Email (Opsional)</Label>
             <Input
               id="email"
               type="email"
@@ -138,12 +138,12 @@ export function RegisterForm({ onToggleMode }: RegisterFormProps) {
               value={formData.email}
               onChange={handleChange}
               disabled={loading}
-              className="h-11"
+              className="h-10 sm:h-11"
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="whatsapp">Nomor WhatsApp *</Label>
+            <Label htmlFor="whatsapp" className="text-sm">Nomor WhatsApp *</Label>
             <Input
               id="whatsapp"
               type="tel"
@@ -152,7 +152,7 @@ export function RegisterForm({ onToggleMode }: RegisterFormProps) {
               onChange={handleChange}
               disabled={loading}
               required
-              className="h-11"
+              className="h-10 sm:h-11"
             />
             <p className="text-xs text-muted-foreground">
               Digunakan untuk notifikasi RH otomatis
@@ -160,7 +160,7 @@ export function RegisterForm({ onToggleMode }: RegisterFormProps) {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="password">Password *</Label>
+            <Label htmlFor="password" className="text-sm">Password *</Label>
             <Input
               id="password"
               type="password"
@@ -170,12 +170,12 @@ export function RegisterForm({ onToggleMode }: RegisterFormProps) {
               disabled={loading}
               required
               minLength={6}
-              className="h-11"
+              className="h-10 sm:h-11"
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="confirmPassword">Konfirmasi Password *</Label>
+            <Label htmlFor="confirmPassword" className="text-sm">Konfirmasi Password *</Label>
             <Input
               id="confirmPassword"
               type="password"
@@ -184,14 +184,14 @@ export function RegisterForm({ onToggleMode }: RegisterFormProps) {
               onChange={handleChange}
               disabled={loading}
               required
-              className="h-11"
+              className="h-10 sm:h-11"
             />
           </div>
 
-          <Button type="submit" className="w-full h-11 text-base" disabled={loading}>
+          <Button type="submit" className="w-full h-10 sm:h-11 text-sm sm:text-base" disabled={loading}>
             {loading ? (
               <>
-                <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                <Loader2 className="mr-2 h-4 w-4 sm:h-5 sm:w-5 animate-spin" />
                 Mendaftar...
               </>
             ) : (
@@ -201,7 +201,7 @@ export function RegisterForm({ onToggleMode }: RegisterFormProps) {
         </form>
       </CardContent>
       {onToggleMode && (
-        <CardFooter className="flex justify-center">
+        <CardFooter className="flex justify-center pb-6 sm:pb-6">
           <p className="text-sm text-muted-foreground">
             Sudah punya akun?{' '}
             <button

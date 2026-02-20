@@ -83,12 +83,12 @@ export function ProductForm({ open, onOpenChange, onSubmit, editingProduct }: Pr
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[500px]">
+      <DialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>
+          <DialogTitle className="text-lg sm:text-xl">
             {editingProduct ? 'Edit Produk' : 'Tambah Produk Baru'}
           </DialogTitle>
-          <DialogDescription>
+          <DialogDescription className="text-sm">
             {editingProduct
               ? 'Perbarui informasi produk di bawah ini'
               : 'Isi informasi produk baru untuk ditambahkan ke sistem'}
@@ -103,7 +103,7 @@ export function ProductForm({ open, onOpenChange, onSubmit, editingProduct }: Pr
             )}
 
             <div className="grid gap-2">
-              <Label htmlFor="name">Nama Produk *</Label>
+              <Label htmlFor="name" className="text-sm">Nama Produk *</Label>
               <Input
                 id="name"
                 placeholder="Contoh: Paracetamol 500mg"
@@ -111,11 +111,12 @@ export function ProductForm({ open, onOpenChange, onSubmit, editingProduct }: Pr
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 disabled={loading}
                 required
+                className="h-10"
               />
             </div>
 
             <div className="grid gap-2">
-              <Label htmlFor="quantity">Jumlah Item *</Label>
+              <Label htmlFor="quantity" className="text-sm">Jumlah Item *</Label>
               <Input
                 id="quantity"
                 type="number"
@@ -124,11 +125,12 @@ export function ProductForm({ open, onOpenChange, onSubmit, editingProduct }: Pr
                 onChange={(e) => setFormData({ ...formData, quantity: parseInt(e.target.value) || 1 })}
                 disabled={loading}
                 required
+                className="h-10"
               />
             </div>
 
             <div className="grid gap-2">
-              <Label htmlFor="expirationDate">Tanggal Kadaluarsa *</Label>
+              <Label htmlFor="expirationDate" className="text-sm">Tanggal Kadaluarsa *</Label>
               <Input
                 id="expirationDate"
                 type="date"
@@ -137,11 +139,12 @@ export function ProductForm({ open, onOpenChange, onSubmit, editingProduct }: Pr
                 disabled={loading}
                 required
                 min={new Date().toISOString().split('T')[0]}
+                className="h-10"
               />
             </div>
 
             <div className="grid gap-2">
-              <Label htmlFor="rhDaysBefore">Hari Sebelum Kadaluarsa untuk RH</Label>
+              <Label htmlFor="rhDaysBefore" className="text-sm">Hari Sebelum Kadaluarsa untuk RH</Label>
               <Input
                 id="rhDaysBefore"
                 type="number"
@@ -150,6 +153,7 @@ export function ProductForm({ open, onOpenChange, onSubmit, editingProduct }: Pr
                 value={formData.rhDaysBefore}
                 onChange={(e) => setFormData({ ...formData, rhDaysBefore: parseInt(e.target.value) || 14 })}
                 disabled={loading}
+                className="h-10"
               />
               <p className="text-xs text-muted-foreground">
                 Produk akan ditandai &quot;Wajib Retur&quot; {formData.rhDaysBefore} hari sebelum tanggal kadaluarsa
@@ -157,16 +161,17 @@ export function ProductForm({ open, onOpenChange, onSubmit, editingProduct }: Pr
             </div>
           </div>
 
-          <DialogFooter>
+          <DialogFooter className="flex-col sm:flex-row gap-2 sm:gap-3">
             <Button
               type="button"
               variant="outline"
               onClick={() => onOpenChange(false)}
               disabled={loading}
+              className="w-full sm:w-auto"
             >
               Batal
             </Button>
-            <Button type="submit" disabled={loading}>
+            <Button type="submit" disabled={loading} className="w-full sm:w-auto">
               {loading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />

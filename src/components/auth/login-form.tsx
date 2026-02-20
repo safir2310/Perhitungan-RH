@@ -45,27 +45,27 @@ export function LoginForm({ onToggleMode }: LoginFormProps) {
   };
 
   return (
-    <Card className="w-full max-w-md shadow-lg">
-      <CardHeader className="space-y-3 text-center">
+    <Card className="w-full max-w-md shadow-lg mx-4">
+      <CardHeader className="space-y-2 sm:space-y-3 text-center px-6 py-4 sm:py-6">
         <div className="flex justify-center">
-          <div className="p-3 bg-primary/10 rounded-full">
-            <Package className="w-8 h-8 text-primary" />
+          <div className="p-2.5 sm:p-3 bg-primary/10 rounded-full">
+            <Package className="w-7 h-7 sm:w-8 sm:h-8 text-primary" />
           </div>
         </div>
-        <CardTitle className="text-2xl font-bold">Sistem RH Kadaluarsa</CardTitle>
-        <CardDescription>Masuk untuk mengelola retur harian produk</CardDescription>
+        <CardTitle className="text-xl sm:text-2xl font-bold">Sistem RH Kadaluarsa</CardTitle>
+        <CardDescription className="text-sm sm:text-base">Masuk untuk mengelola retur harian produk</CardDescription>
       </CardHeader>
-      <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-4">
+      <CardContent className="px-6 pb-4 sm:pb-6">
+        <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
           {error && (
             <Alert variant="destructive">
               <AlertCircle className="h-4 w-4" />
-              <AlertDescription>{error}</AlertDescription>
+              <AlertDescription className="text-sm">{error}</AlertDescription>
             </Alert>
           )}
 
           <div className="space-y-2">
-            <Label htmlFor="username">Username / Email</Label>
+            <Label htmlFor="username" className="text-sm">Username / Email</Label>
             <Input
               id="username"
               type="text"
@@ -74,12 +74,12 @@ export function LoginForm({ onToggleMode }: LoginFormProps) {
               onChange={(e) => setUsername(e.target.value)}
               disabled={loading}
               required
-              className="h-11"
+              className="h-10 sm:h-11"
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password" className="text-sm">Password</Label>
             <Input
               id="password"
               type="password"
@@ -88,14 +88,14 @@ export function LoginForm({ onToggleMode }: LoginFormProps) {
               onChange={(e) => setPassword(e.target.value)}
               disabled={loading}
               required
-              className="h-11"
+              className="h-10 sm:h-11"
             />
           </div>
 
-          <Button type="submit" className="w-full h-11 text-base" disabled={loading}>
+          <Button type="submit" className="w-full h-10 sm:h-11 text-sm sm:text-base" disabled={loading}>
             {loading ? (
               <>
-                <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                <Loader2 className="mr-2 h-4 w-4 sm:h-5 sm:w-5 animate-spin" />
                 Masuk...
               </>
             ) : (
@@ -105,7 +105,7 @@ export function LoginForm({ onToggleMode }: LoginFormProps) {
         </form>
       </CardContent>
       {onToggleMode && (
-        <CardFooter className="flex justify-center">
+        <CardFooter className="flex justify-center pb-6 sm:pb-6">
           <p className="text-sm text-muted-foreground">
             Belum punya akun?{' '}
             <button

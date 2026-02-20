@@ -156,23 +156,24 @@ export function RHDashboard() {
   const handleSubmit = editingProduct ? handleUpdateProduct : handleAddProduct;
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-background">
       {/* Header */}
       <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-primary/10 rounded-lg">
-                <Bell className="h-6 w-6 text-primary" />
+        <div className="container mx-auto px-3 sm:px-4 py-3">
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
+              <div className="p-2 bg-primary/10 rounded-lg flex-shrink-0">
+                <Bell className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
               </div>
-              <div>
-                <h1 className="text-2xl font-bold">Sistem RH Kadaluarsa</h1>
-                <p className="text-sm text-muted-foreground">Retur Harian H-14</p>
+              <div className="min-w-0">
+                <h1 className="text-lg sm:text-2xl font-bold truncate">Sistem RH</h1>
+                <p className="text-xs sm:text-sm text-muted-foreground hidden sm:block">Retur Harian H-14</p>
               </div>
             </div>
 
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2 text-sm">
+            <div className="flex items-center gap-2 sm:gap-4">
+              {/* Connection Status - Icon only on mobile */}
+              <div className="flex items-center gap-1 text-xs sm:text-sm">
                 {connected ? (
                   <div className="flex items-center gap-1 text-green-600 dark:text-green-400">
                     <Wifi className="h-4 w-4" />
@@ -186,19 +187,20 @@ export function RHDashboard() {
                 )}
               </div>
 
-              <div className="flex items-center gap-2 text-sm">
+              {/* User info - hidden on mobile */}
+              <div className="hidden sm:flex items-center gap-2 text-sm">
                 <User className="h-4 w-4" />
-                <span className="font-medium">{user?.username}</span>
-                <span className="text-muted-foreground">({user?.role})</span>
+                <span className="font-medium truncate max-w-[100px]">{user?.username}</span>
               </div>
 
               <Button
                 variant="outline"
                 size="sm"
                 onClick={handleLogout}
+                className="h-8 px-2 sm:h-9 sm:px-4"
               >
-                <LogOut className="h-4 w-4 mr-2" />
-                Keluar
+                <LogOut className="h-4 w-4 sm:mr-2" />
+                <span className="hidden sm:inline">Keluar</span>
               </Button>
             </div>
           </div>
@@ -206,7 +208,7 @@ export function RHDashboard() {
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 container mx-auto px-4 py-6 space-y-6">
+      <main className="flex-1 container mx-auto px-3 sm:px-4 py-4 sm:py-6 space-y-4 sm:space-y-6">
         {/* Statistics */}
         {!statsLoading && statistics && (
           <StatisticsCards statistics={statistics} />
@@ -215,45 +217,63 @@ export function RHDashboard() {
         {/* Warning Alerts */}
         {statistics && (statistics.summary.warning.count > 0 || statistics.summary.expired.count > 0) && (
           <Alert className="border-yellow-500 bg-yellow-50 dark:bg-yellow-950/20">
-            <AlertCircle className="h-4 w-4 text-yellow-600" />
+            <AlertCircle className="h-4 w-4 text-yellow-600 flex-shrink-0 mt-0.5" />
             <AlertDescription className="text-yellow-800 dark:text-yellow-200">
-              <strong>Perhatian:</strong> Ada{' '}
-              {statistics.summary.warning.count} produk wajib retur dan{' '}
-              {statistics.summary.expired.count} produk sudah jatuh RH.{' '}
-              {statistics.summary.warning.count > 0 && (
-                <Button
-                  variant="link"
-                  className="p-0 h-auto text-yellow-800 dark:text-yellow-200 underline ml-2"
-                  onClick={handleCheckNotifications}
-                >
-                  Kirim Notifikasi Sekarang
-                </Button>
-              )}
+              <div className="flex flex-col gap-2">
+                <span>
+                  <strong>Perhatian:</strong> Ada{' '}
+                  {statistics.summary.warning.count} produk wajib retur dan{' '}
+                  {statistics.summary.expired.count} produk sudah jatuh RH.
+                </span>
+                {statistics.summary.warning.count > 0 && (
+                  <Button
+                    variant="link"
+                    className="p-0 h-auto text-yellow-800 dark:text-yellow-200 underline justify-start"
+                    onClick={handleCheckNotifications}
+                  >
+                    Kirim Notifikasi Sekarang
+                  </Button>
+                )}
+              </div>
             </AlertDescription>
           </Alert>
         )}
 
         {/* Action Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center">
-          <div className="flex gap-2">
-            <Button onClick={() => { setEditingProduct(null); setFormOpen(true); }}>
+        <div className="flex flex-col gap-3 sm:flex-row sm:gap-4 justify-between items-stretch sm:items-center">
+          <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+            <Button
+              onClick={() => { setEditingProduct(null); setFormOpen(true); }}
+              className="w-full sm:w-auto"
+              size="sm"
+            >
               <Plus className="h-4 w-4 mr-2" />
               Tambah Produk
             </Button>
-            <Button variant="outline" onClick={handleCheckNotifications}>
+            <Button
+              variant="outline"
+              onClick={handleCheckNotifications}
+              className="w-full sm:w-auto"
+              size="sm"
+            >
               <Bell className="h-4 w-4 mr-2" />
               Cek Notifikasi
             </Button>
-            <Button variant="outline" onClick={() => { refetch(); refetchStats(); }}>
+            <Button
+              variant="outline"
+              onClick={() => { refetch(); refetchStats(); }}
+              className="w-full sm:w-auto"
+              size="sm"
+            >
               <RefreshCw className="h-4 w-4 mr-2" />
               Refresh
             </Button>
           </div>
 
-          <div className="flex items-center gap-2">
-            <span className="text-sm text-muted-foreground">Filter:</span>
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full sm:w-auto">
+            <span className="text-sm text-muted-foreground flex items-center">Filter:</span>
             <Select value={filterStatus} onValueChange={(value: any) => setFilterStatus(value)}>
-              <SelectTrigger className="w-[180px]">
+              <SelectTrigger className="w-full sm:w-[180px]">
                 <SelectValue placeholder="Semua Status" />
               </SelectTrigger>
               <SelectContent>
@@ -267,8 +287,8 @@ export function RHDashboard() {
         </div>
 
         {/* Products Table */}
-        <div className="rounded-lg border bg-card p-6">
-          <h2 className="text-xl font-semibold mb-4">Daftar Produk</h2>
+        <div className="rounded-lg border bg-card p-3 sm:p-6">
+          <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">Daftar Produk</h2>
           <ProductsTable
             products={filteredProducts}
             loading={loading}
