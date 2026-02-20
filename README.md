@@ -1,141 +1,266 @@
-# 🚀 Welcome to Z.ai Code Scaffold
+# 📦 Sistem RH Kadaluarsa (Retur Harian)
 
-A modern, production-ready web application scaffold powered by cutting-edge technologies, designed to accelerate your development with [Z.ai](https://chat.z.ai)'s AI-powered coding assistance.
+Sistem manajemen **Retur Harian (RH)** untuk produk dengan aturan **H-14** sebelum tanggal kadaluarsa, lengkap dengan sistem autentikasi dan notifikasi WhatsApp otomatis.
 
-## ✨ Technology Stack
+## 🎯 Fitur Utama
 
-This scaffold provides a robust foundation built with:
+### 🔐 Autentikasi
+- **Login & Register** dengan validasi lengkap
+- Validasi **Nomor WhatsApp** format Indonesia
+- **Password Hashing** menggunakan SHA-256
+- Session management yang aman
 
-### 🎯 Core Framework
-- **⚡ Next.js 16** - The React framework for production with App Router
-- **📘 TypeScript 5** - Type-safe JavaScript for better developer experience
-- **🎨 Tailwind CSS 4** - Utility-first CSS framework for rapid UI development
+### 📊 Dashboard RH
+- **Statistics Cards** real-time:
+  - Total Produk
+  - Produk Aman (Hijau)
+  - Wajib Retur (Kuning)
+  - Jatuh RH (Merah)
+- **Tabel Produk** dengan filter berdasarkan status
+- **Warning Alerts** untuk produk yang perlu perhatian
 
-### 🧩 UI Components & Styling
-- **🧩 shadcn/ui** - High-quality, accessible components built on Radix UI
-- **🎯 Lucide React** - Beautiful & consistent icon library
-- **🌈 Framer Motion** - Production-ready motion library for React
-- **🎨 Next Themes** - Perfect dark mode in 2 lines of code
+### 📦 Manajemen Produk
+- **CRUD Produk** lengkap
+- **Logika RH H-14** otomatis:
+  - Tanggal RH = Tanggal Kadaluarsa - 14 hari (customizable)
+  - Status otomatis berubah berdasarkan tanggal
+- Form tambah/edit produk dengan validasi lengkap
 
-### 📋 Forms & Validation
-- **🎣 React Hook Form** - Performant forms with easy validation
-- **✅ Zod** - TypeScript-first schema validation
+### 📲 Notifikasi WhatsApp Otomatis
+Notifikasi dikirim otomatis saat:
+1. Produk baru ditambahkan dengan status "warning" atau "expired"
+2. Status produk berubah menjadi "warning" atau "expired"
+3. **Auto-check periodik** setiap jam
 
-### 🔄 State Management & Data Fetching
-- **🐻 Zustand** - Simple, scalable state management
-- **🔄 TanStack Query** - Powerful data synchronization for React
-- **🌐 Fetch** - Promise-based HTTP request
+**Format Pesan WhatsApp:**
 
-### 🗄️ Database & Backend
-- **🗄️ Prisma** - Next-generation TypeScript ORM
-- **🔐 NextAuth.js** - Complete open-source authentication solution
+Untuk Produk Wajib Retur:
+```
+⚠️ NOTIFIKASI RH
 
-### 🎨 Advanced UI Features
-- **📊 TanStack Table** - Headless UI for building tables and datagrids
-- **🖱️ DND Kit** - Modern drag and drop toolkit for React
-- **📊 Recharts** - Redefined chart library built with React and D3
-- **🖼️ Sharp** - High performance image processing
+Produk: [Nama Produk]
+Jumlah: [Jumlah] item
+Tanggal Kadaluarsa: [DD-MM-YYYY]
+Tanggal RH: [DD-MM-YYYY]
+Status: WAJIB RETUR (H-14)
 
-### 🌍 Internationalization & Utilities
-- **🌍 Next Intl** - Internationalization library for Next.js
-- **📅 Date-fns** - Modern JavaScript date utility library
-- **🪝 ReactUse** - Collection of essential React hooks for modern development
+Segera lakukan retur sebelum tanggal kadaluarsa.
+```
 
-## 🎯 Why This Scaffold?
+Untuk Produk Jatuh RH:
+```
+🚨 PERINGATAN RH
 
-- **🏎️ Fast Development** - Pre-configured tooling and best practices
-- **🎨 Beautiful UI** - Complete shadcn/ui component library with advanced interactions
-- **🔒 Type Safety** - Full TypeScript configuration with Zod validation
-- **📱 Responsive** - Mobile-first design principles with smooth animations
-- **🗄️ Database Ready** - Prisma ORM configured for rapid backend development
-- **🔐 Auth Included** - NextAuth.js for secure authentication flows
-- **📊 Data Visualization** - Charts, tables, and drag-and-drop functionality
-- **🌍 i18n Ready** - Multi-language support with Next Intl
-- **🚀 Production Ready** - Optimized build and deployment settings
-- **🤖 AI-Friendly** - Structured codebase perfect for AI assistance
+Produk: [Nama Produk]
+Jumlah: [Jumlah] item
+Tanggal Kadaluarsa: [DD-MM-YYYY]
+Status: JATUH RH (KADALUARSA)
 
-## 🚀 Quick Start
+Produk tidak boleh dijual. Segera lakukan penarikan dari rak.
+```
 
+### 🔔 Notifikasi Real-time
+- **Socket.io Service** untuk notifikasi instan
+- Toast notifications di dashboard
+- Indikator koneksi real-time (Online/Offline)
+
+## 🚀 Teknologi yang Digunakan
+
+- **Framework**: Next.js 16 dengan App Router
+- **Language**: TypeScript 5
+- **Styling**: Tailwind CSS 4
+- **UI Components**: shadcn/ui (New York style)
+- **Database**: Prisma ORM dengan SQLite
+- **Real-time**: Socket.io
+- **Cron Jobs**: node-cron
+
+## 📁 Struktur Project
+
+```
+Perhitungan-RH/
+├── prisma/
+│   └── schema.prisma          # Database schema
+├── src/
+│   ├── app/
+│   │   ├── api/
+│   │   │   ├── auth/          # API Auth
+│   │   │   ├── products/      # API Products
+│   │   │   ├── notifications/ # API Notifications
+│   │   │   └── auto-check/    # API Auto-check
+│   │   ├── layout.tsx
+│   │   └── page.tsx
+│   ├── components/
+│   │   ├── auth/              # Komponen Auth
+│   │   ├── dashboard/         # Komponen Dashboard
+│   │   └── ui/                # shadcn/ui Components
+│   ├── hooks/
+│   │   ├── use-products.ts    # Hook Products
+│   │   └── use-socket.ts      # Hook Socket.io
+│   └── lib/
+│       ├── auth.ts            # Helper Auth
+│       ├── rh-helper.ts       # Helper RH Logic
+│       ├── whatsapp.ts        # Helper WhatsApp
+│       └── db.ts              # Prisma Client
+├── mini-services/
+│   ├── notification-service/  # Socket.io Service
+│   └── cron-service/          # Cron Service
+└── worklog.md                 # Documentation
+```
+
+## ⚙️ Instalasi & Setup
+
+### 1. Clone Repository
 ```bash
-# Install dependencies
-bun install
+git clone https://github.com/safir2310/Perhitungan-RH.git
+cd Perhitungan-RH
+```
 
-# Start development server
+### 2. Install Dependencies
+```bash
+bun install
+```
+
+### 3. Setup Database
+```bash
+bun run db:push
+```
+
+### 4. Setup Environment Variables
+Buat file `.env`:
+```env
+DATABASE_URL="file:./db/custom.db"
+CRON_SECRET="your-secret-key"
+CHECK_INTERVAL="0 * * * *"  # Setiap jam
+```
+
+### 5. Jalankan Development Server
+```bash
+# Main application
 bun run dev
 
-# Build for production
-bun run build
+# Notification service (port 3002)
+cd mini-services/notification-service
+bun run dev
 
-# Start production server
-bun start
+# Cron service (background)
+cd mini-services/cron-service
+bun run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to see your application running.
+## 📱 Cara Penggunaan
 
-## 🤖 Powered by Z.ai
+1. **Daftar Akun**
+   - Buka aplikasi
+   - Klik "Daftar sekarang"
+   - Isi username, nomor WhatsApp, dan password
 
-This scaffold is optimized for use with [Z.ai](https://chat.z.ai) - your AI assistant for:
+2. **Login**
+   - Masukkan username dan password
+   - Klik "Masuk"
 
-- **💻 Code Generation** - Generate components, pages, and features instantly
-- **🎨 UI Development** - Create beautiful interfaces with AI assistance  
-- **🔧 Bug Fixing** - Identify and resolve issues with intelligent suggestions
-- **📝 Documentation** - Auto-generate comprehensive documentation
-- **🚀 Optimization** - Performance improvements and best practices
+3. **Tambah Produk**
+   - Klik "Tambah Produk"
+   - Isi:
+     - Nama Produk
+     - Jumlah Item
+     - Tanggal Kadaluarsa
+     - Hari sebelum kadaluarsa untuk RH (default: 14)
 
-Ready to build something amazing? Start chatting with Z.ai at [chat.z.ai](https://chat.z.ai) and experience the future of AI-powered development!
+4. **Monitor Dashboard**
+   - Lihat statistik produk
+   - Cek produk wajib retur dan jatuh RH
+   - Filter berdasarkan status
 
-## 📁 Project Structure
+5. **Kirim Notifikasi**
+   - Klik "Cek Notifikasi" untuk memeriksa dan mengirim notifikasi
+   - Notifikasi otomatis dikirim saat produk wajib retur
+
+## 🎨 Indikator Status
+
+| Status | Warna | Keterangan |
+|--------|-------|------------|
+| 🟢 Aman | Hijau | Produk aman, belum wajib retur |
+| 🟡 Wajib Retur | Kuning | Sudah H-14, segera lakukan retur |
+| 🔴 Jatuh RH | Merah | Produk kadaluarsa, tidak boleh dijual |
+
+## 📝 Logika RH
 
 ```
-src/
-├── app/                 # Next.js App Router pages
-├── components/          # Reusable React components
-│   └── ui/             # shadcn/ui components
-├── hooks/              # Custom React hooks
-└── lib/                # Utility functions and configurations
+Tanggal RH = Tanggal Kadaluarsa - Hari Sebelum RH (default 14)
+
+Status Aman:    Hari Ini < Tanggal RH
+Status Warning: Hari Ini ≥ Tanggal RH DAN Hari Ini < Tanggal Kadaluarsa
+Status Expired: Hari Ini ≥ Tanggal Kadaluarsa
 ```
 
-## 🎨 Available Features & Components
+## 🔒 Keamanan
 
-This scaffold includes a comprehensive set of modern web development tools:
+- Password di-hash dengan SHA-256
+- Session cookies dengan httpOnly dan secure flags
+- Secret verification untuk cron jobs
+- Validasi input di frontend dan backend
 
-### 🧩 UI Components (shadcn/ui)
-- **Layout**: Card, Separator, Aspect Ratio, Resizable Panels
-- **Forms**: Input, Textarea, Select, Checkbox, Radio Group, Switch
-- **Feedback**: Alert, Toast (Sonner), Progress, Skeleton
-- **Navigation**: Breadcrumb, Menubar, Navigation Menu, Pagination
-- **Overlay**: Dialog, Sheet, Popover, Tooltip, Hover Card
-- **Data Display**: Badge, Avatar, Calendar
+## 📄 API Endpoints
 
-### 📊 Advanced Data Features
-- **Tables**: Powerful data tables with sorting, filtering, pagination (TanStack Table)
-- **Charts**: Beautiful visualizations with Recharts
-- **Forms**: Type-safe forms with React Hook Form + Zod validation
+### Auth
+- `POST /api/auth/register` - Register user baru
+- `POST /api/auth/login` - Login user
+- `POST /api/auth/logout` - Logout user
+- `GET /api/auth/session` - Cek session
 
-### 🎨 Interactive Features
-- **Animations**: Smooth micro-interactions with Framer Motion
-- **Drag & Drop**: Modern drag-and-drop functionality with DND Kit
-- **Theme Switching**: Built-in dark/light mode support
+### Products
+- `GET /api/products` - Get semua produk
+- `POST /api/products` - Tambah produk baru
+- `GET /api/products/[id]` - Get detail produk
+- `PUT /api/products/[id]` - Update produk
+- `DELETE /api/products/[id]` - Hapus produk
+- `GET /api/products/statistics` - Get statistik
 
-### 🔐 Backend Integration
-- **Authentication**: Ready-to-use auth flows with NextAuth.js
-- **Database**: Type-safe database operations with Prisma
-- **API Client**: HTTP requests with Fetch + TanStack Query
-- **State Management**: Simple and scalable with Zustand
+### Notifications
+- `POST /api/notifications/check` - Cek dan kirim notifikasi
+- `POST /api/notifications/send` - Kirim notifikasi manual
+- `GET /api/notifications/logs` - Get log notifikasi
 
-### 🌍 Production Features
-- **Internationalization**: Multi-language support with Next Intl
-- **Image Optimization**: Automatic image processing with Sharp
-- **Type Safety**: End-to-end TypeScript with Zod validation
-- **Essential Hooks**: 100+ useful React hooks with ReactUse for common patterns
+### Auto-check
+- `POST /api/auto-check` - Jalankan auto-check (dengan secret)
+- `GET /api/auto-check?secret=...` - Cek status auto-check
 
-## 🤝 Get Started with Z.ai
+## 🚀 Deployment
 
-1. **Clone this scaffold** to jumpstart your project
-2. **Visit [chat.z.ai](https://chat.z.ai)** to access your AI coding assistant
-3. **Start building** with intelligent code generation and assistance
-4. **Deploy with confidence** using the production-ready setup
+### Vercel (Recommended for Next.js)
+1. Connect repository ke Vercel
+2. Setup environment variables
+3. Deploy
+
+### Alternatif
+- Render
+- Railway
+- Self-hosted VPS
+
+## 🤝 Kontribusi
+
+Contributions are welcome! Silakan:
+1. Fork repository
+2. Buat branch baru
+3. Commit changes
+4. Push ke branch
+5. Buat Pull Request
+
+## 📄 License
+
+MIT License - silakan gunakan untuk keperluan apapun.
+
+## 👥 Authors
+
+- **Safir** - *Initial work* - [safir2310](https://github.com/safir2310)
+
+## 🙏 Acknowledgments
+
+- Next.js team
+- shadcn/ui components
+- Prisma team
+- Socket.io team
 
 ---
 
-Built with ❤️ for the developer community. Supercharged by [Z.ai](https://chat.z.ai) 🚀
+**Dibuat dengan ❤️ untuk mempermudah manajemen retur harian produk**
